@@ -1,0 +1,21 @@
+{
+	"name": "cmsgears/plugin-social-meta",
+	"description": "The Social Meta Plugin for CMSGears. It can be used to add social meta tags on site header.",
+	"homepage": "http://www.cmsgears.org",
+	"type": "package",
+	"keywords": [ "yii2", "cmsgears", "plugin", "social meta" ],
+	"license": "GPLv3",
+	"support": {
+		"resources": "https://www.cmsgears.org"
+	},
+	"autoload": {
+		"psr-4": {
+			"cmsgears\\social\\meta\\": ""
+		}
+	},
+    "require": {
+        "php": ">=5.4.0",
+        "cmsgears/module-core": "*",
+        "cmsgears/module-cms": "*"
+    }
+}
