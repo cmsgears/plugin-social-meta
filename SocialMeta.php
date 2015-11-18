@@ -55,7 +55,8 @@ class SocialMeta extends \yii\base\Component {
 
 			if( $this->page->isPost() ) {
 
-				$ogUrl	= Url::toRoute( [ "/$this->postBasePath/$page->slug" ], true );
+				$slug	= $this->page->slug;
+				$ogUrl	= Url::toRoute( [ "/$this->postBasePath/$slug" ], true );
 			}
 			else {
 
@@ -64,8 +65,9 @@ class SocialMeta extends \yii\base\Component {
 					$ogUrl	= Url::toRoute( [ '/' ], true );
 				}
 				else {
-
-					$ogUrl	= Url::toRoute( [ '/$page->slug' ], true );	
+					
+					$slug	= $this->page->slug;
+					$ogUrl	= Url::toRoute( [ "/$slug" ], true );	
 				}
 			}
 			
