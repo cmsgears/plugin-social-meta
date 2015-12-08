@@ -1,17 +1,57 @@
 --
+-- Main Site
+--
+
+SELECT @site := `id` FROM cmg_core_site WHERE slug = 'main';
+
+--
+-- Twitter Meta Config Form
+--
+
+INSERT INTO `cmg_core_form` (`siteId`,`templateId`,`createdBy`,`modifiedBy`,`name`,`slug`,`type`,`description`,`successMessage`,`captcha`,`visibility`,`active`,`userMail`,`adminMail`,`options`,`createdAt`,`modifiedAt`) VALUES
+	(@site,NULL,1,1,'Config Twitter Meta','config-twitter-meta','system','Twitter meta configuration form.','All configurations saved successfully.',0,10,1,0,0,NULL,'2014-10-11 14:22:54','2014-10-11 14:22:54');
+
+SELECT @form := `id` FROM cmg_core_form WHERE slug = 'config-twitter-meta';
+
+INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`validators`,`options`,`data`,`order`) VALUES 
+	(@form,'active','Active',20,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
+	(@form,'page','Page',20,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
+	(@form,'post','Post',20,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
+	(@form,'card','Card',40,0,'required','{\"title\":\"Card types\",\"options\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}',NULL,0),
+	(@form,'site','Site',0,0,NULL,'{\"title\":\"@username for the website used in the card footer\",\"placeholder\":\"@username\"}',NULL,0),
+	(@form,'creator','Creator',0,0,NULL,'{\"title\":\"@username for the content creator / author.\",\"placeholder\":\"@username\"}',NULL,0);
+
+--
+-- Facebook Meta Config Form
+--
+
+INSERT INTO `cmg_core_form` (`siteId`,`templateId`,`createdBy`,`modifiedBy`,`name`,`slug`,`type`,`description`,`successMessage`,`captcha`,`visibility`,`active`,`userMail`,`adminMail`,`options`,`createdAt`,`modifiedAt`) VALUES
+	(@site,NULL,1,1,'Config Facebook Meta','config-facebook-meta','system','Facebook meta configuration form.','All configurations saved successfully.',0,10,1,0,0,NULL,'2014-10-11 14:22:54','2014-10-11 14:22:54');
+
+SELECT @form := `id` FROM cmg_core_form WHERE slug = 'config-facebook-meta';
+
+INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`validators`,`options`,`data`,`order`) VALUES 
+	(@form,'active','Active',20,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
+	(@form,'page','Page',20,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
+	(@form,'post','Post',20,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
+	(@form,'app_id','Application Id',0,0,'required','{\"title\":\"fb app id\",\"placeholder\":\"fb app id\"}',NULL,0),
+	(@form,'author','Author',0,0,NULL,'{\"title\":\"author\",\"placeholder\":\"author\"}',NULL,0),
+	(@form,'publisher','Publisher',0,0,NULL,'{\"title\":\"publisher\",\"placeholder\":\"publisher\"}',NULL,0);
+
+--
 -- Dumping data for table `cmg_core_model_attribute`
 --
 
 INSERT INTO `cmg_core_model_attribute` (`parentId`,`parentType`,`name`,`value`,`type`) VALUES
-	(1,'site','active','1','twitter-meta'),
-	(1,'site','page','1','twitter-meta'),
-	(1,'site','post','1','twitter-meta'),
-	(1,'site','card','summary_large_image','twitter-meta'),
-	(1,'site','site',NULL,'twitter-meta'),
-	(1,'site','creator',NULL,'twitter-meta'),
-	(1,'site','active','1','facebook-meta'),
-	(1,'site','page','1','facebook-meta'),
-	(1,'site','post','1','facebook-meta'),
-	(1,'site','appId',NULL,'facebook-meta'),
-	(1,'site','author',NULL,'facebook-meta'),
-	(1,'site','publisher',NULL,'facebook-meta');
+	(@site,'site','active','1','twitter-meta'),
+	(@site,'site','page','1','twitter-meta'),
+	(@site,'site','post','1','twitter-meta'),
+	(@site,'site','card','summary_large_image','twitter-meta'),
+	(@site,'site','site',NULL,'twitter-meta'),
+	(@site,'site','creator',NULL,'twitter-meta'),
+	(@site,'site','active','1','facebook-meta'),
+	(@site,'site','page','1','facebook-meta'),
+	(@site,'site','post','1','facebook-meta'),
+	(@site,'site','app_id',NULL,'facebook-meta'),
+	(@site,'site','author',NULL,'facebook-meta'),
+	(@site,'site','publisher',NULL,'facebook-meta');

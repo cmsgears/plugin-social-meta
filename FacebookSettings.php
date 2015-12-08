@@ -10,14 +10,14 @@ use cmsgears\core\common\config\CoreGlobal;
 use cmsgears\core\common\config\CmgProperties;
 
 class FacebookSettings extends CmgProperties {
-	
+
 	const CONFIG_ACTIVE		= 'active';
  	const CONFIG_PAGE		= 'page';
  	const CONFIG_POST		= 'post';
- 	const CONFIG_APP_ID		= 'appId';
+ 	const CONFIG_APP_ID		= 'app_id';
  	const CONFIG_AUTHOR		= 'author';
  	const CONFIG_PUBLISHER	= 'publisher';
- 
+
 	// Singleton instance
 	private static $instance;
 
