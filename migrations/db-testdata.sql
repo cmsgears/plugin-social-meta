@@ -17,7 +17,7 @@ INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`va
 	(@form,'active','Active',20,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
 	(@form,'page','Page',20,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
 	(@form,'post','Post',20,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
-	(@form,'card','Card',40,0,'required','{\"title\":\"Card types\",\"options\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}',NULL,0),
+	(@form,'card','Card',40,0,'required','{\"title\":\"Card types\",\"items\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}',NULL,0),
 	(@form,'site','Site',0,0,NULL,'{\"title\":\"@username for the website used in the card footer\",\"placeholder\":\"@username\"}',NULL,0),
 	(@form,'creator','Creator',0,0,NULL,'{\"title\":\"@username for the content creator / author.\",\"placeholder\":\"@username\"}',NULL,0);
 
