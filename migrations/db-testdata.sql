@@ -14,10 +14,10 @@ INSERT INTO `cmg_core_form` (`siteId`,`templateId`,`createdBy`,`modifiedBy`,`nam
 SELECT @form := `id` FROM cmg_core_form WHERE slug = 'config-twitter-meta';
 
 INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`validators`,`htmlOptions`,`data`,`order`) VALUES 
-	(@form,'active','Active',20,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
-	(@form,'page','Page',20,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
-	(@form,'post','Post',20,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
-	(@form,'card','Card',40,0,'required','{\"title\":\"Card types\",\"items\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}',NULL,0),
+	(@form,'active','Active',40,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
+	(@form,'page','Page',40,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
+	(@form,'post','Post',40,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
+	(@form,'card','Card',80,0,'required','{\"title\":\"Card types\",\"items\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}',NULL,0),
 	(@form,'site','Site',0,0,NULL,'{\"title\":\"@username for the website used in the card footer\",\"placeholder\":\"@username\"}',NULL,0),
 	(@form,'creator','Creator',0,0,NULL,'{\"title\":\"@username for the content creator / author.\",\"placeholder\":\"@username\"}',NULL,0);
 
@@ -31,9 +31,9 @@ INSERT INTO `cmg_core_form` (`siteId`,`templateId`,`createdBy`,`modifiedBy`,`nam
 SELECT @form := `id` FROM cmg_core_form WHERE slug = 'config-facebook-meta';
 
 INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`validators`,`htmlOptions`,`data`,`order`) VALUES 
-	(@form,'active','Active',20,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
-	(@form,'page','Page',20,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
-	(@form,'post','Post',20,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
+	(@form,'active','Active',40,0,'required','{\"title\":\"activate or de-activate.\"}',NULL,0),
+	(@form,'page','Page',40,0,'required','{\"title\":\"enable or disabled for all pages.\"}',NULL,0),
+	(@form,'post','Post',40,0,'required','{\"title\":\"enable or disabled for all posts.\"}',NULL,0),
 	(@form,'app_id','Application Id',0,0,'required','{\"title\":\"fb app id\",\"placeholder\":\"fb app id\"}',NULL,0),
 	(@form,'author','Author',0,0,NULL,'{\"title\":\"author\",\"placeholder\":\"author\"}',NULL,0),
 	(@form,'publisher','Publisher',0,0,NULL,'{\"title\":\"publisher\",\"placeholder\":\"publisher\"}',NULL,0);
