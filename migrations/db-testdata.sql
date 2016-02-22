@@ -42,16 +42,16 @@ INSERT INTO `cmg_core_form_field` (`formId`,`name`,`label`,`type`,`compress`,`va
 -- Dumping data for table `cmg_core_model_attribute`
 --
 
-INSERT INTO `cmg_core_model_attribute` (`parentId`,`parentType`,`name`,`type`,`valueType`,`value`) VALUES
-	(@site,'site','active','twitter-meta','flag','1'),
-	(@site,'site','page','twitter-meta','flag','1'),
-	(@site,'site','post','twitter-meta','flag','1'),
-	(@site,'site','card','twitter-meta','text','summary_large_image'),
-	(@site,'site','site','twitter-meta','text',NULL),
-	(@site,'site','creator','twitter-meta','text',NULL),
-	(@site,'site','active','facebook-meta','flag','1'),
-	(@site,'site','page','facebook-meta','flag','1'),
-	(@site,'site','post','facebook-meta','flag','1'),
-	(@site,'site','app_id','facebook-meta','text',NULL),
-	(@site,'site','author','facebook-meta','text',NULL),
-	(@site,'site','publisher','facebook-meta','text',NULL);
+INSERT INTO `cmg_core_model_attribute` (`parentId`,`parentType`,`name`,`label`,`type`,`valueType`,`value`) VALUES
+	(@site,'site','active','Active','twitter-meta','flag','1'),
+	(@site,'site','page','Page','twitter-meta','flag','1'),
+	(@site,'site','post','Post','twitter-meta','flag','1'),
+	(@site,'site','card','Card','twitter-meta','text','summary_large_image'),
+	(@site,'site','site','Site','twitter-meta','text',NULL),
+	(@site,'site','creator','Creator','twitter-meta','text',NULL),
+	(@site,'site','active','Active','facebook-meta','flag','1'),
+	(@site,'site','page','Page','facebook-meta','flag','1'),
+	(@site,'site','post','Post','facebook-meta','flag','1'),
+	(@site,'site','app_id','App Id','facebook-meta','text',NULL),
+	(@site,'site','author','Author','facebook-meta','text',NULL),
+	(@site,'site','publisher','Publisher','facebook-meta','text',NULL);
