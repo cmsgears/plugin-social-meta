@@ -99,9 +99,9 @@ class m160622_061039_social_meta extends \yii\db\Migration {
 			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"activate or de-activate.\"}' ],
 			[ $config->id, 'page', 'Page', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all pages.\"}' ],
 			[ $config->id, 'post', 'Post', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all posts.\"}' ],
-			[ $config->id, 'app_id', 'Application Id', FormField::TYPE_TEXT, false, 'required', 0, null, '{\"title\":\"fb app id\",\"placeholder\":\"fb app id\"}' ],
-			[ $config->id, 'site', 'Site', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"author\",\"placeholder\":\"author\"}' ],
-			[ $config->id, 'creator', 'Creator', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"publisher\",\"placeholder\":\"publisher\"}' ],
+			[ $config->id, 'app_id', 'App Id', FormField::TYPE_TEXT, false, 'required', 0, null, '{\"title\":\"fb app id\",\"placeholder\":\"fb app id\"}' ],
+			[ $config->id, 'author', 'Author', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"author\",\"placeholder\":\"author\"}' ],
+			[ $config->id, 'publisher', 'Publisher', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"publisher\",\"placeholder\":\"publisher\"}' ],
 		];
 
 		$this->batchInsert( $this->prefix . 'core_form_field', $columns, $fields );
