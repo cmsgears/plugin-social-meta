@@ -64,12 +64,12 @@ class m160622_061039_social_meta extends \yii\db\Migration {
 		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'validators', 'order', 'icon', 'htmlOptions' ];
 
 		$fields	= [
-			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"activate or de-activate.\"}' ],
-			[ $config->id, 'page', 'Page', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all pages.\"}' ],
-			[ $config->id, 'post', 'Post', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all posts.\"}' ],
-			[ $config->id, 'card', 'Card', FormField::TYPE_SELECT, false, 'required', 0, null, '{\"title\":\"Card types\",\"items\":[\"summary\",\"summary_large_image\",\"photo\",\"gallery\",\"product\",\"app\",\"player\"]}' ],
-			[ $config->id, 'site', 'Site', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"@username for the website used in the card footer\",\"placeholder\":\"@username\"}' ],
-			[ $config->id, 'creator', 'Creator', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"@username for the content creator / author.\",\"placeholder\":\"@username\"}' ],
+			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"activate or de-activate."}' ],
+			[ $config->id, 'page', 'Page', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"enable or disable for all pages."}' ],
+			[ $config->id, 'post', 'Post', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"enable or disable for all posts."}' ],
+			[ $config->id, 'card', 'Card', FormField::TYPE_SELECT, false, 'required', 0, null, '{"title":"Card types","items":["summary","summary_large_image","photo","gallery","product","app","player"]}' ],
+			[ $config->id, 'site', 'Site', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"@username for the website used in the card footer","placeholder":"@username"}' ],
+			[ $config->id, 'creator', 'Creator', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"@username for the content creator / author.","placeholder":"@username"}' ],
 		];
 
 		$this->batchInsert( $this->prefix . 'core_form_field', $columns, $fields );
@@ -96,12 +96,12 @@ class m160622_061039_social_meta extends \yii\db\Migration {
 		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'validators', 'order', 'icon', 'htmlOptions' ];
 
 		$fields	= [
-			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"activate or de-activate.\"}' ],
-			[ $config->id, 'page', 'Page', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all pages.\"}' ],
-			[ $config->id, 'post', 'Post', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{\"title\":\"enable or disable for all posts.\"}' ],
-			[ $config->id, 'app_id', 'App Id', FormField::TYPE_TEXT, false, 'required', 0, null, '{\"title\":\"fb app id\",\"placeholder\":\"fb app id\"}' ],
-			[ $config->id, 'author', 'Author', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"author\",\"placeholder\":\"author\"}' ],
-			[ $config->id, 'publisher', 'Publisher', FormField::TYPE_TEXT, false, null, 0, null, '{\"title\":\"publisher\",\"placeholder\":\"publisher\"}' ],
+			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"activate or de-activate."}' ],
+			[ $config->id, 'page', 'Page', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"enable or disable for all pages."}' ],
+			[ $config->id, 'post', 'Post', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"enable or disable for all posts."}' ],
+			[ $config->id, 'app_id', 'App Id', FormField::TYPE_TEXT, false, 'required', 0, null, '{"title":"fb app id","placeholder":"fb app id"}' ],
+			[ $config->id, 'author', 'Author', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"author","placeholder":"author"}' ],
+			[ $config->id, 'publisher', 'Publisher', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"publisher","placeholder":"publisher"}' ],
 		];
 
 		$this->batchInsert( $this->prefix . 'core_form_field', $columns, $fields );
@@ -111,7 +111,7 @@ class m160622_061039_social_meta extends \yii\db\Migration {
 
 		$columns = [ 'modelId', 'name', 'label', 'type', 'valueType', 'value' ];
 
-		$attributes	= [
+		$metas	= [
 			[ $this->site->id, 'active', 'Active','twitter-meta','flag','1' ],
 			[ $this->site->id, 'page', 'Page', 'twitter-meta', 'flag', '1' ],
 			[ $this->site->id, 'post', 'Post', 'twitter-meta', 'flag', '1' ],
@@ -126,7 +126,7 @@ class m160622_061039_social_meta extends \yii\db\Migration {
 			[ $this->site->id, 'publisher', 'Publisher', 'facebook-meta', 'text', null ]
 		];
 
-		$this->batchInsert( $this->prefix . 'core_site_attribute', $columns, $attributes );
+		$this->batchInsert( $this->prefix . 'core_site_meta', $columns, $metas );
 	}
 
     public function down() {
