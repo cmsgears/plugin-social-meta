@@ -140,5 +140,3 @@ class m160622_061039_social_meta extends \yii\db\Migration {
         return true;
     }
 }
-
-?>
