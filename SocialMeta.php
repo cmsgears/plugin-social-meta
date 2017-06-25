@@ -100,8 +100,7 @@ class SocialMeta extends \yii\base\Component {
 			$creator	= $settings->getCreator();
 			$page		= $this->page;
 			$content	= $this->content;
-			$summary	= $content->summary;
-
+			$summary	 = filter_var($content->summary, FILTER_SANITIZE_MAGIC_QUOTES);
 			if( strlen( $summary ) > 200 ) {
 
 				$summary	= substr( $summary, 0, 199 );
@@ -112,7 +111,7 @@ class SocialMeta extends \yii\base\Component {
 								<meta name='twitter:site' content='$site' />
 								<meta name='twitter:creator' content='$creator' />
 								<meta name='twitter:title' content='$page->name' />
-								<meta name='twitter:description' content='$summary' />";
+								<meta name='twitter:description' content=\"$summary\" />";
 
 			if( isset( $banner ) ) {
 
@@ -139,11 +138,12 @@ class SocialMeta extends \yii\base\Component {
 			$locale			= $coreProperties->getLocale();
 			$page			= $this->page;
 			$content		= $this->content;
-
+			$summary = filter_var($content->summary, FILTER_SANITIZE_MAGIC_QUOTES);
+			
 			$metaContent	= "<meta property='og:title' content='$page->name' />
 								<meta property='og:site_name' content='$siteName'/>
 								<meta property='og:url' content='$ogUrl' />
-								<meta property='og:description' content='$content->summary'/>
+								<meta property='og:description' content=\"$summary\"/>
 								<meta property='og:locale' content='$locale' />
 								<meta property='fb:app_id' content='$appId' />";
 
