@@ -76,7 +76,7 @@ class SocialMeta extends \yii\base\Component {
 				$metaContent	.= $this->generateTwitterCard( $ogUrl, $banner );
 			}
 
-			if( $this->facebook[ 'required' ] ) {
+			if( $this->facebook ) {
 
 				$metaContent	.= $this->generateFacebookTags( $ogUrl, $banner );
 			}
