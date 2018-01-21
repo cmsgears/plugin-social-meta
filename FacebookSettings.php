@@ -34,9 +34,9 @@ class FacebookSettings extends CmgProperties {
 
 		if( !isset( self::$instance ) ) {
 
-			self::$instance	= new TwitterSettings();
+			self::$instance	= new FacebookSettings();
 
-			self::$instance->init( 'twitter-meta' );
+			self::$instance->init( 'facebook-meta' );
 		}
 
 		return self::$instance;
