@@ -70,10 +70,10 @@ class m160622_061039_social_meta extends Migration {
 			'name' => 'Config Facebook Meta', 'slug' => 'config-facebook-meta',
 			'type' => CoreGlobal::TYPE_SYSTEM,
 			'description' => 'Facebook Meta configuration form.',
-			'successMessage' => 'All configurations saved successfully.',
+			'success' => 'All configurations saved successfully.',
 			'captcha' => false,
 			'visibility' => Form::VISIBILITY_PROTECTED,
-			'active' => true, 'userMail' => false, 'adminMail' => false,
+			'status' => Form::STATUS_ACTIVE, 'userMail' => false, 'adminMail' => false,
 			'createdAt' => DateUtil::getDateTime(),
 			'modifiedAt' => DateUtil::getDateTime()
 		] );
@@ -100,10 +100,10 @@ class m160622_061039_social_meta extends Migration {
 			'name' => 'Config Twitter Meta', 'slug' => 'config-twitter-meta',
 			'type' => CoreGlobal::TYPE_SYSTEM,
 			'description' => 'Twitter Meta configuration form.',
-			'successMessage' => 'All configurations saved successfully.',
+			'success' => 'All configurations saved successfully.',
 			'captcha' => false,
 			'visibility' => Form::VISIBILITY_PROTECTED,
-			'active' => true, 'userMail' => false, 'adminMail' => false,
+			'status' => Form::STATUS_ACTIVE, 'userMail' => false, 'adminMail' => false,
 			'createdAt' => DateUtil::getDateTime(),
 			'modifiedAt' => DateUtil::getDateTime()
 		] );
