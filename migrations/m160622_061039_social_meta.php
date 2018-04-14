@@ -124,17 +124,17 @@ class m160622_061039_social_meta extends Migration {
 
 	private function insertDefaultConfig() {
 
-		$columns = [ 'modelId', 'name', 'label', 'type', 'valueType', 'value' ];
+		$columns = [ 'modelId', 'name', 'label', 'type', 'active', 'valueType', 'value', 'data' ];
 
 		$metas = [
-			[ $this->site->id, 'active', 'Active', 'facebook-meta', 'flag', '1' ],
-			[ $this->site->id, 'app_id', 'App Id', 'facebook-meta', 'text', null ],
-			[ $this->site->id, 'author', 'Author', 'facebook-meta', 'text', null ],
-			[ $this->site->id, 'publisher', 'Publisher', 'facebook-meta', 'text', null ],
-			[ $this->site->id, 'active', 'Active', 'twitter-meta', 'flag', '1' ],
-			[ $this->site->id, 'card', 'Card', 'twitter-meta', 'text', 'summary_large_image' ],
-			[ $this->site->id, 'site', 'Site', 'twitter-meta', 'text', null ],
-			[ $this->site->id, 'creator', 'Creator', 'twitter-meta', 'text', null ]
+			[ $this->site->id, 'active', 'Active', 'facebook-meta', 1, 'flag', '1', NULL ],
+			[ $this->site->id, 'app_id', 'App Id', 'facebook-meta', 1, 'text', NULL, NULL ],
+			[ $this->site->id, 'author', 'Author', 'facebook-meta', 1, 'text', NULL, NULL ],
+			[ $this->site->id, 'publisher', 'Publisher', 'facebook-meta', 1, 'text', NULL, NULL ],
+			[ $this->site->id, 'active', 'Active', 'twitter-meta', 1, 'flag', '1', NULL ],
+			[ $this->site->id, 'card', 'Card', 'twitter-meta', 1, 'text', 'summary_large_image', NULL ],
+			[ $this->site->id, 'site', 'Site', 'twitter-meta', 1, 'text', NULL, NULL ],
+			[ $this->site->id, 'creator', 'Creator', 'twitter-meta', 1, 'text', NULL, NULL ]
 		];
 
 		$this->batchInsert( $this->prefix . 'core_site_meta', $columns, $metas );
