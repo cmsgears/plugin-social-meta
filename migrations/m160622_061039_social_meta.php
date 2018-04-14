@@ -80,13 +80,13 @@ class m160622_061039_social_meta extends Migration {
 
 		$config = Form::findBySlugType( 'config-facebook-meta', CoreGlobal::TYPE_SYSTEM );
 
-		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'validators', 'order', 'icon', 'htmlOptions' ];
+		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'meta', 'active', 'validators', 'order', 'icon', 'htmlOptions' ];
 
 		$fields = [
-			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"activate or de-activate."}' ],
-			[ $config->id, 'app_id', 'App Id', FormField::TYPE_TEXT, false, 'required', 0, null, '{"title":"fb app id","placeholder":"fb app id"}' ],
-			[ $config->id, 'author', 'Author', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"author","placeholder":"author"}' ],
-			[ $config->id, 'publisher', 'Publisher', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"publisher","placeholder":"publisher"}' ],
+			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, true, true, 'required', 0, null, '{"title":"activate or de-activate."}' ],
+			[ $config->id, 'app_id', 'App Id', FormField::TYPE_TEXT, false, true, true, 'required', 0, null, '{"title":"fb app id","placeholder":"fb app id"}' ],
+			[ $config->id, 'author', 'Author', FormField::TYPE_TEXT, false, true, true, null, 0, null, '{"title":"author","placeholder":"author"}' ],
+			[ $config->id, 'publisher', 'Publisher', FormField::TYPE_TEXT, false, true, true, null, 0, null, '{"title":"publisher","placeholder":"publisher"}' ],
 		];
 
 		$this->batchInsert( $this->prefix . 'core_form_field', $columns, $fields );
@@ -110,13 +110,13 @@ class m160622_061039_social_meta extends Migration {
 
 		$config	= Form::findBySlugType( 'config-twitter-meta', CoreGlobal::TYPE_SYSTEM );
 
-		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'validators', 'order', 'icon', 'htmlOptions' ];
+		$columns = [ 'formId', 'name', 'label', 'type', 'compress', 'meta', 'active', 'validators', 'order', 'icon', 'htmlOptions' ];
 
 		$fields = [
-			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, 'required', 0, null, '{"title":"activate or de-activate."}' ],
-			[ $config->id, 'card', 'Card', FormField::TYPE_SELECT, false, 'required', 0, null, '{"title":"Card types","items":["summary","summary_large_image","app","player"]}' ],
-			[ $config->id, 'site', 'Site', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"@username for the website used in the card footer.","placeholder":"@username"}' ],
-			[ $config->id, 'creator', 'Creator', FormField::TYPE_TEXT, false, null, 0, null, '{"title":"@username for the content creator / author.","placeholder":"@username"}' ]
+			[ $config->id, 'active', 'Active', FormField::TYPE_TOGGLE, false, true, true, 'required', 0, null, '{"title":"activate or de-activate."}' ],
+			[ $config->id, 'card', 'Card', FormField::TYPE_SELECT, false, true, true, 'required', 0, null, '{"title":"Card types","items":["summary","summary_large_image","app","player"]}' ],
+			[ $config->id, 'site', 'Site', FormField::TYPE_TEXT, false, true, true, null, 0, null, '{"title":"@username for the website used in the card footer.","placeholder":"@username"}' ],
+			[ $config->id, 'creator', 'Creator', FormField::TYPE_TEXT, false, true, true, null, 0, null, '{"title":"@username for the content creator / author.","placeholder":"@username"}' ]
 		];
 
 		$this->batchInsert( $this->prefix . 'core_form_field', $columns, $fields );
