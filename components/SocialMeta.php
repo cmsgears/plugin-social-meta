@@ -15,6 +15,7 @@ use yii\helpers\Url;
 
 // CMG Imports
 use cmsgears\core\common\config\CoreProperties;
+use cmsgears\cms\common\config\CmsGlobal;
 
 use cmsgears\social\meta\config\FacebookMetaProperties;
 use cmsgears\social\meta\config\TwitterMetaProperties;
@@ -77,7 +78,7 @@ class SocialMeta extends Component {
 			$banner	= $this->content->banner;
 
 			// Post
-			if( $this->page->isPost() ) {
+			if( $this->page->type == CmsGlobal::TYPE_POST ) {
 
 				$slug	= $this->page->slug;
 				$ogUrl	= Url::toRoute( [ "/$this->postBasePath/$slug" ], true );
@@ -166,7 +167,7 @@ class SocialMeta extends Component {
 				}
 			}
 
-			if( $this->page->isPost() ) {
+			if( $this->page->type == CmsGlobal::TYPE_POST ) {
 
 				$author		= $properties->getAuthor();
 				$publisher	= $properties->getPublisher();
@@ -277,7 +278,10 @@ class SocialMeta extends Component {
 						$metaContent[ 'timage' ] = "<meta name=\"twitter:image\" content=\"$imageUrl\" />";
 					}
 
-					$metaContent[ 'timagealt' ] = "<meta name=\"twitter:image:alt\" content=\"$banner->altText\" />";
+					if( isset( $banner ) ) {
+
+						$metaContent[ 'timagealt' ] = "<meta name=\"twitter:image:alt\" content=\"$banner->altText\" />";
+					}
 
 					break;
 				}

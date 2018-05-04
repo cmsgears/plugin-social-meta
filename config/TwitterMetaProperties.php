@@ -50,7 +50,7 @@ class TwitterMetaProperties extends Properties {
 
 		if( !isset( self::$instance ) ) {
 
-			self::$instance	= new TwitterSettings();
+			self::$instance	= new TwitterMetaProperties();
 
 			self::$instance->init( 'twitter-meta' );
 		}

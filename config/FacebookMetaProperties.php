@@ -50,7 +50,7 @@ class FacebookMetaProperties extends Properties {
 
 		if( !isset( self::$instance ) ) {
 
-			self::$instance	= new FacebookSettings();
+			self::$instance	= new FacebookMetaProperties();
 
 			self::$instance->init( 'facebook-meta' );
 		}
