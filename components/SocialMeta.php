@@ -10,15 +10,19 @@
 namespace cmsgears\social\meta\components;
 
 // Yii Imports
+use Yii;
 use yii\base\Component;
 use yii\helpers\Url;
 
 // CMG Imports
 use cmsgears\core\common\config\CoreProperties;
 use cmsgears\cms\common\config\CmsGlobal;
+use cmsgears\core\frontend\config\SiteProperties;
 
 use cmsgears\social\meta\config\FacebookMetaProperties;
 use cmsgears\social\meta\config\TwitterMetaProperties;
+
+use cmsgears\core\common\utilities\CodeGenUtil;
 
 /**
  * The SocialMeta component generates the meta tags required for social network to show the
@@ -26,12 +30,10 @@ use cmsgears\social\meta\config\TwitterMetaProperties;
  */
 class SocialMeta extends Component {
 
-	public $page;
 	public $model;
-	public $content;
+	public $summary;
 
 	public $homePage;
-	public $basePath;
 
 	public $twitter		= false;
 	public $facebook	= false;
@@ -47,58 +49,36 @@ class SocialMeta extends Component {
 	// Helper to generate tags
 	public static function getMetaTags( $params, $config = [] ) {
 
-		if( isset( $params[ 'page' ] ) ) {
+		if( empty( $params[ 'model' ] ) ) {
 
-			$config[ 'page' ]		= $params[ 'page' ];
-			$config[ 'content' ]	= $params[ 'content' ];
-			$config[ 'homePage' ]	= isset( $params[ 'homePage' ] ) ? $params[ 'homePage' ] : 'home';
-			$config[ 'basePath' ]	= isset( $params[ 'basePath' ] ) ? $params[ 'basePath' ] : 'post';
-
-			$meta = new SocialMeta( $config );
-
-			return $meta->generatePageMetaTags();
+			return;
 		}
-		else if( isset( $params[ 'model' ] ) ) {
 
-			$config[ 'model' ]		= $params[ 'model' ];
-			$config[ 'content' ]	= isset( $params[ 'content' ] ) ? $params[ 'content' ] : null;
-			$config[ 'basePath' ]	= isset( $params[ 'basePath' ] ) ? $params[ 'basePath' ] : null;
+		$config[ 'model' ]		= $params[ 'model' ];
+		$config[ 'summary' ]	= $params[ 'summary' ];
+		$config[ 'homePage' ]	= isset( $params[ 'homePage' ] ) ? $params[ 'homePage' ] : 'home';
 
-			$meta = new SocialMeta( $config );
+		$meta = new SocialMeta( $config );
 
-			return $meta->generateModelMetaTags();
-		}
+		return $meta->generatePageMetaTags();
 	}
 
 	public function generatePageMetaTags() {
 
-		if( isset( $this->page ) ) {
+		$content = '';
 
-			$ogUrl	= null;
-			$banner	= $this->content->banner;
+		if( isset( $this->model ) ) {
 
-			// Post
-			if( $this->page->type == CmsGlobal::TYPE_POST ) {
+			$ogUrl	= Yii::$app->request->absoluteUrl;
+			$banner	= ( isset( $this->model->modelContent ) ) ? $this->model->modelContent->banner : ( isset( $this->model->banner ) ? $this->model->banner : null );
 
-				$slug	= $this->page->slug;
-				$ogUrl	= Url::toRoute( [ "/$this->postBasePath/$slug" ], true );
-			}
-			// Page
-			else {
+			// Home Page
+			if( strcmp( $this->model->slug, $this->homePage ) == 0 ) {
 
-				if( strcmp( $this->page->slug, $this->homePage ) == 0 ) {
-
-					$ogUrl	= Url::toRoute( [ '/' ], true );
-				}
-				else {
-
-					$slug	= $this->page->slug;
-					$ogUrl	= Url::toRoute( [ "/$slug" ], true );
-				}
+				$ogUrl	= Url::toRoute( [ '/' ], true );
 			}
 
-			$metaContent	= [];
-			$content		= '';
+			$metaContent = [];
 
 			if( $this->facebook ) {
 
@@ -110,12 +90,12 @@ class SocialMeta extends Component {
 				$metaContent = $this->generateTwitterCard( $banner, $metaContent );
 			}
 
-			foreach( $metaContent as $key => $value ) {
+			foreach( $metaContent as $value ) {
 
 				$content = $content . $value;
 			}
 
-			$content = $content . "<link rel='canonical' href='$ogUrl'/>";
+			$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
 		}
 
 		return $content;
@@ -133,33 +113,34 @@ class SocialMeta extends Component {
 
 			$appId	= $properties->getAppId();
 
-			$page		= $this->page;
-			$content	= $this->content;
-			$summary	= filter_var( $content->summary, FILTER_SANITIZE_STRING );
+			$model		= $this->model;
+			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
 
-			if( strlen( $summary ) > 120 ) {
-
-				$summary = substr( $summary, 0, 120 );
-			}
-
-			$metaContent[ 'otitle' ]	= "<meta property=\"og:title\" content=\"$page->name\" />";
+			$metaContent[ 'otitle' ]	= "<meta property=\"og:title\" content=\"$model->displayName\" />";
 			$metaContent[ 'osite' ]		= "<meta property=\"og:site_name\" content=\"$siteName\"/>";
 			$metaContent[ 'ourl' ]		= "<meta property=\"og:url\" content=\"$ogUrl\" />";
 			$metaContent[ 'odesc' ]		= "<meta property=\"og:description\" content=\"$summary\"/>";
 			$metaContent[ 'olocale' ]	= "<meta property=\"og:locale\" content=\"$locale\" />";
 			$metaContent[ 'otype' ]		= "<meta property=\"og:type\" content=\"website\" />";
-			$metaContent[ 'fid' ]		= "<meta property=\"fb:app_id\" content=\"$appId\" />";
 
-			if( isset( $banner ) ) {
+			if( isset( $appId ) ) {
 
-				$imageUrl	= $banner->getFileUrl();
-				$filePath	= $banner->getFilePath();
+				$metaContent[ 'fid' ] = "<meta property=\"fb:app_id\" content=\"$appId\" />";
+			}
+
+			$defaultBanner = SiteProperties::getInstance()->getDefaultBanner();
+
+			if( isset( $banner ) || !empty( $defaultBanner ) ) {
+
+				$imageUrl	= CodeGenUtil::getFileUrl( $model->modelContent->banner, [ 'image' => $defaultBanner ] );
+
+				$filePath	= !empty( $banner ) ? $banner->getFilePath() : Yii::getAlias( '@webroot' ) . "/images/$defaultBanner";
 
 				$metaContent[ 'oimage' ] = "<meta property=\"og:image\" content=\"$imageUrl\">";
 
 				if( isset( $filePath ) ) {
 
-					list($width, $height, $type, $attr) = getimagesize( $banner->getFilePath() );
+					list($width, $height, $type, $attr) = getimagesize( $filePath );
 
 					$metaContent[ 'oimagew' ] = "<meta property=\"og:image:width\" content=\"$width\">";
 					$metaContent[ 'oimageh' ] = "<meta property=\"og:image:height\" content=\"$height\">";
@@ -167,10 +148,12 @@ class SocialMeta extends Component {
 				}
 			}
 
-			if( $this->page->type == CmsGlobal::TYPE_POST ) {
+			if( in_array( $this->model->type, [ CmsGlobal::TYPE_ARTICLE, CmsGlobal::TYPE_POST ] ) ) {
 
-				$author		= $properties->getAuthor();
-				$publisher	= $properties->getPublisher();
+				// TODO: User Facebook Id of the model creator
+				$author = $properties->getAuthor();
+
+				$publisher = $properties->getPublisher();
 
 				$metaContent[ 'otype' ] = "<meta property=\"og:type\" content=\"article\" />";
 
@@ -208,14 +191,8 @@ class SocialMeta extends Component {
 
 			$site		= $properties->getSite();
 			$creator	= $properties->getCreator();
-			$page		= $this->page;
-			$content	= $this->content;
-			$summary	= filter_var( $content->summary, FILTER_SANITIZE_STRING );
-
-			if( strlen( $summary ) > 120 ) {
-
-				$summary = substr( $summary, 0, 120 );
-			}
+			$model		= $this->model;
+			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
 
 			// Configure Card, Site and Creator
 			if( isset( $card ) ) {
@@ -233,6 +210,8 @@ class SocialMeta extends Component {
 				}
 			}
 
+			$defaultBanner = SiteProperties::getInstance()->getDefaultBanner();
+
 			// TODO: Add support for player and app cards generated by Twitter
 			switch( $card ) {
 
@@ -240,7 +219,7 @@ class SocialMeta extends Component {
 
 					if( empty( $metaContent[ 'otitle' ] ) ) {
 
-						$metaContent[ 'otitle' ] = "<meta name=\"twitter:title\" content=\"$page->name\" />";
+						$metaContent[ 'otitle' ] = "<meta name=\"twitter:title\" content=\"$model->displayName\" />";
 					}
 
 					if( empty( $metaContent[ 'odesc' ] ) ) {
@@ -248,14 +227,17 @@ class SocialMeta extends Component {
 						$metaContent[ 'tdesc' ] = "<meta name=\"twitter:description\" content=\"$summary\" />";
 					}
 
-					if( isset( $banner ) && empty( $metaContent[ 'oimage' ] ) ) {
+					if( empty( $metaContent[ 'oimage' ] ) && ( isset( $banner ) || isset( $defaultBanner ) ) ) {
 
-						$imageUrl = $banner->getMediumUrl();
+						$imageUrl = isset( $banner ) ? $banner->getMediumUrl() : Yii::getAlias( '@webroot' ) . "/images/$defaultBanner";
 
 						$metaContent[ 'timage' ] = "<meta name=\"twitter:image\" content=\"$imageUrl\" />";
 					}
 
-					$metaContent[ 'timagealt' ] = "<meta name=\"twitter:image:alt\" content=\"$banner->altText\" />";
+					if( isset( $banner ) && !empty( $banner->altText ) ) {
+
+						$metaContent[ 'timagealt' ] = "<meta name=\"twitter:image:alt\" content=\"$banner->altText\" />";
+					}
 
 					break;
 				}
@@ -263,7 +245,7 @@ class SocialMeta extends Component {
 
 					if( empty( $metaContent[ 'otitle' ] ) ) {
 
-						$metaContent[ 'otitle' ] = "<meta name=\"twitter:title\" content=\"$page->name\" />";
+						$metaContent[ 'otitle' ] = "<meta name=\"twitter:title\" content=\"$model->displayName\" />";
 					}
 
 					if( empty( $metaContent[ 'odesc' ] ) ) {
@@ -271,14 +253,14 @@ class SocialMeta extends Component {
 						$metaContent[ 'tdesc' ] = "<meta name=\"twitter:description\" content=\"$summary\" />";
 					}
 
-					if( isset( $banner ) && empty( $metaContent[ 'oimage' ] ) ) {
+					if( empty( $metaContent[ 'oimage' ] ) && ( isset( $banner ) || isset( $defaultBanner ) ) ) {
 
-						$imageUrl	= $banner->getFileUrl();
+						$imageUrl = isset( $banner ) ? $banner->getFileUrl() : Yii::getAlias( '@webroot' ) . "/images/$defaultBanner";
 
 						$metaContent[ 'timage' ] = "<meta name=\"twitter:image\" content=\"$imageUrl\" />";
 					}
 
-					if( isset( $banner ) ) {
+					if( isset( $banner ) && !empty( $banner->altText ) ) {
 
 						$metaContent[ 'timagealt' ] = "<meta name=\"twitter:image:alt\" content=\"$banner->altText\" />";
 					}
