@@ -73,7 +73,7 @@ class SocialMeta extends Component {
 			$banner	= ( isset( $this->model->modelContent ) ) ? $this->model->modelContent->banner : ( isset( $this->model->banner ) ? $this->model->banner : null );
 
 			// Home Page
-			if( strcmp( $this->model->slug, $this->homePage ) == 0 ) {
+			if( isset( $this->model->slug ) && strcmp( $this->model->slug, $this->homePage ) == 0 ) {
 
 				$ogUrl	= Url::toRoute( [ '/' ], true );
 			}
@@ -132,9 +132,10 @@ class SocialMeta extends Component {
 
 			if( isset( $banner ) || !empty( $defaultBanner ) ) {
 
-				$imageUrl	= CodeGenUtil::getFileUrl( $model->modelContent->banner, [ 'image' => $defaultBanner ] );
+				$banner		= isset( $model->bannerId ) && isset( $model->banner ) ? $model->banner : ( isset( $model->modelContent ) ? $model->modelContent->banner : null );
+				$imageUrl	= CodeGenUtil::getFileUrl( $banner, [ 'image' => $defaultBanner ] );
 
-				$filePath	= !empty( $banner ) ? $banner->getFilePath() : Yii::getAlias( '@webroot' ) . "/images/$defaultBanner";
+				$filePath = !empty( $banner ) ? $banner->getFilePath() : Yii::getAlias( '@webroot' ) . "/images/$defaultBanner";
 
 				$metaContent[ 'oimage' ] = "<meta property=\"og:image\" content=\"$imageUrl\">";
 
