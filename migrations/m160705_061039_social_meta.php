@@ -24,7 +24,7 @@ use cmsgears\core\common\utilities\DateUtil;
  *
  * @since 1.0.0
  */
-class m160622_061039_social_meta extends Migration {
+class m160705_061039_social_meta extends Migration {
 
 	// Public Variables
 
@@ -142,7 +142,7 @@ class m160622_061039_social_meta extends Migration {
 
 	public function down() {
 
-		echo "m160622_061039_social_meta will be deleted with m160621_014408_core.\n";
+		echo "m160705_061039_social_meta will be deleted with m160621_014408_core.\n";
 
 		return true;
 	}
