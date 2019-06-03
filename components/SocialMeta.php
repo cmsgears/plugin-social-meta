@@ -149,7 +149,7 @@ class SocialMeta extends Component {
 				}
 			}
 
-			if( in_array( $this->model->type, [ CmsGlobal::TYPE_ARTICLE, CmsGlobal::TYPE_POST ] ) ) {
+			if( isset( $this->model->type ) && in_array( $this->model->type, [ CmsGlobal::TYPE_ARTICLE, CmsGlobal::TYPE_POST ] ) ) {
 
 				// TODO: User Facebook Id of the model creator
 				$author = $properties->getAuthor();
