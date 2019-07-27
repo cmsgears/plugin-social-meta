@@ -16,7 +16,6 @@ use yii\helpers\Url;
 
 // CMG Imports
 use cmsgears\core\common\config\CoreProperties;
-use cmsgears\cms\common\config\CmsGlobal;
 use cmsgears\core\frontend\config\SiteProperties;
 
 use cmsgears\social\meta\config\FacebookMetaProperties;
@@ -149,7 +148,7 @@ class SocialMeta extends Component {
 				}
 			}
 
-			if( isset( $this->model->type ) && in_array( $this->model->type, [ CmsGlobal::TYPE_ARTICLE, CmsGlobal::TYPE_POST ] ) ) {
+			if( isset( $this->model->type ) && in_array( $this->model->type, [ 'article', 'blog' ] ) ) {
 
 				// TODO: User Facebook Id of the model creator
 				$author = $properties->getAuthor();
