@@ -94,7 +94,27 @@ class SocialMeta extends Component {
 				$content = $content . $value;
 			}
 
-			$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+			$settings = $this->model->getDataMeta( 'settings' );
+			
+			if( !empty( $settings ) ) {
+				
+				if ( isset( $_GET[ 'amp' ] ) ) {
+					
+                  			$queryPosition = strpos( $ogUrl, '?' );
+                  
+                  			$ogUrl = substr( $ogUrl, 0, $queryPosition );
+                  
+					$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+				} 
+				else if( $settings->amp == '1' ) {
+					
+                  			$content = $content . "<link rel=\"amphtml\" href=\"$ogUrl?amp=1\"/>";
+				}
+				
+			} else {
+				
+				$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+			}
 		}
 
 		return $content;
