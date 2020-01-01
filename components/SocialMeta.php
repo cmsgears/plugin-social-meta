@@ -106,7 +106,7 @@ class SocialMeta extends Component {
                   
 					$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
 				} 
-				else if( $settings->amp == '1' ) {
+				else if( isset( $settings->amp ) && $settings->amp == '1' ) {
 					
                   			$content = $content . "<link rel=\"amphtml\" href=\"$ogUrl?amp=1\"/>";
 				}
