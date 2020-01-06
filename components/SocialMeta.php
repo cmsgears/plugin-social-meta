@@ -11,7 +11,6 @@ namespace cmsgears\social\meta\components;
 
 // Yii Imports
 use Yii;
-use yii\base\Component;
 use yii\helpers\Url;
 
 // CMG Imports
@@ -27,7 +26,7 @@ use cmsgears\core\common\utilities\CodeGenUtil;
  * The SocialMeta component generates the meta tags required for social network to show the
  * content on their site and application.
  */
-class SocialMeta extends Component {
+class SocialMeta extends \yii\base\Component {
 
 	public $model;
 	public $summary;
@@ -95,24 +94,24 @@ class SocialMeta extends Component {
 			}
 
 			$settings = $this->model->getDataMeta( 'settings' );
-			
+
 			if( !empty( $settings ) ) {
-				
-				if ( isset( $_GET[ 'amp' ] ) ) {
-					
-                  			$queryPosition = strpos( $ogUrl, '?' );
-                  
-                  			$ogUrl = substr( $ogUrl, 0, $queryPosition );
-                  
+
+				if( isset( $_GET[ 'amp' ] ) ) {
+
+                  	$queryPosition = strpos( $ogUrl, '?' );
+
+                  	$ogUrl = substr( $ogUrl, 0, $queryPosition );
+
 					$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
-				} 
-				else if( isset( $settings->amp ) && $settings->amp == '1' ) {
-					
-                  			$content = $content . "<link rel=\"amphtml\" href=\"$ogUrl?amp=1\"/>";
 				}
-				
-			} else {
-				
+				else if( isset( $settings->amp ) && $settings->amp == '1' ) {
+
+                  	$content = $content . "<link rel=\"amphtml\" href=\"$ogUrl?amp=1\"/>";
+				}
+			}
+			else {
+
 				$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
 			}
 		}
@@ -127,10 +126,11 @@ class SocialMeta extends Component {
 		if( $properties->isActive() ) {
 
 			$coreProperties	= CoreProperties::getInstance();
-			$siteName		= $coreProperties->getSiteName();
-			$locale			= $coreProperties->getLocale();
 
-			$appId	= $properties->getAppId();
+			$siteName	= $coreProperties->getSiteName();
+			$locale		= $coreProperties->getLocale();
+
+			$appId = $properties->getAppId();
 
 			$model		= $this->model;
 			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
