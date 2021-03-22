@@ -11,12 +11,10 @@ namespace cmsgears\social\meta\components;
 
 // Yii Imports
 use Yii;
-use yii\base\Component;
 use yii\helpers\Url;
 
 // CMG Imports
 use cmsgears\core\common\config\CoreProperties;
-use cmsgears\cms\common\config\CmsGlobal;
 use cmsgears\core\frontend\config\SiteProperties;
 
 use cmsgears\social\meta\config\FacebookMetaProperties;
@@ -28,7 +26,7 @@ use cmsgears\core\common\utilities\CodeGenUtil;
  * The SocialMeta component generates the meta tags required for social network to show the
  * content on their site and application.
  */
-class SocialMeta extends Component {
+class SocialMeta extends \yii\base\Component {
 
 	public $model;
 	public $summary;
@@ -95,7 +93,27 @@ class SocialMeta extends Component {
 				$content = $content . $value;
 			}
 
-			$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+			$settings = $this->model->getDataMeta( 'settings' );
+
+			if( !empty( $settings ) ) {
+
+				if( isset( $_GET[ 'amp' ] ) ) {
+
+                  	$queryPosition = strpos( $ogUrl, '?' );
+
+                  	$ogUrl = substr( $ogUrl, 0, $queryPosition );
+
+					$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+				}
+				else if( isset( $settings->amp ) && $settings->amp == '1' ) {
+
+                  	$content = $content . "<link rel=\"amphtml\" href=\"$ogUrl?amp=1\"/>";
+				}
+			}
+			else {
+
+				$content = $content . "<link rel=\"canonical\" href=\"$ogUrl\"/>";
+			}
 		}
 
 		return $content;
@@ -108,10 +126,11 @@ class SocialMeta extends Component {
 		if( $properties->isActive() ) {
 
 			$coreProperties	= CoreProperties::getInstance();
-			$siteName		= $coreProperties->getSiteName();
-			$locale			= $coreProperties->getLocale();
 
-			$appId	= $properties->getAppId();
+			$siteName	= $coreProperties->getSiteName();
+			$locale		= $coreProperties->getLocale();
+
+			$appId = $properties->getAppId();
 
 			$model		= $this->model;
 			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
@@ -149,7 +168,7 @@ class SocialMeta extends Component {
 				}
 			}
 
-			if( in_array( $this->model->type, [ CmsGlobal::TYPE_ARTICLE, CmsGlobal::TYPE_POST ] ) ) {
+			if( isset( $this->model->type ) && in_array( $this->model->type, [ 'article', 'blog' ] ) ) {
 
 				// TODO: User Facebook Id of the model creator
 				$author = $properties->getAuthor();
