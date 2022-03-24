@@ -133,7 +133,7 @@ class SocialMeta extends \yii\base\Component {
 			$appId = $properties->getAppId();
 
 			$model		= $this->model;
-			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
+			$summary	= htmlspecialchars( $this->summary );
 
 			$metaContent[ 'otitle' ]	= "<meta property=\"og:title\" content=\"$model->displayName\" />";
 			$metaContent[ 'osite' ]		= "<meta property=\"og:site_name\" content=\"$siteName\"/>";
@@ -212,7 +212,7 @@ class SocialMeta extends \yii\base\Component {
 			$site		= $properties->getSite();
 			$creator	= $properties->getCreator();
 			$model		= $this->model;
-			$summary	= filter_var( $this->summary, FILTER_SANITIZE_STRING );
+			$summary	= htmlspecialchars( $this->summary );
 
 			// Configure Card, Site and Creator
 			if( isset( $card ) ) {
